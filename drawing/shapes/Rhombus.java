@@ -26,8 +26,31 @@ public class Rhombus extends Polygon {
 
     public static final class Factory implements drawing.shapes.Factory<Rhombus> {
         @Override
-        public Rhombus create(double x, double y) {
-            return new Rhombus(x, y, 100, 200);
+        public Rhombus create(double startX, double startY, double finishX, double finishY) {
+            double x;
+            double y;
+            double width;
+            double height;
+
+            if (finishX < startX) {
+                x = finishX;
+                width = startX - finishX;
+            }
+            else {
+                x = startX;
+                width = finishX - startX;
+            }
+
+            if (finishY < startY) {
+                y = finishY;
+                height = startY - finishY;
+            }
+            else {
+                y = startY;
+                height = finishY - startY;
+            }
+
+            return new Rhombus(x, y, width, height);
         }
     }
 }

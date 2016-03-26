@@ -10,7 +10,10 @@ import javafx.scene.input.MouseEvent;
 
 public class Controller {
     public Canvas drawCanvas;
-    private Factory shapeFactory = new Rectangle.Factory();;
+    private Factory shapeFactory = new Rectangle.Factory();
+
+    private double startX;
+    private double startY;
 
     public void rectangleButtonClicked(ActionEvent actionEvent) {
         shapeFactory = new Rectangle.Factory();
@@ -18,12 +21,6 @@ public class Controller {
 
     public void circleButtonClicked(ActionEvent actionEvent) {
         shapeFactory = new Circle.Factory();
-    }
-
-    public void mouseClicked(Event event) {
-        Shape shape = shapeFactory.create(((MouseEvent)event).getX(), ((MouseEvent)event).getY());
-        Drawer drawer = DrawerFactory.getDrawer(shape.getClass());
-        drawer.draw(drawCanvas.getGraphicsContext2D(), shape);
     }
 
     public void lineButtonClicked(ActionEvent actionEvent) {
@@ -43,6 +40,20 @@ public class Controller {
     }
 
     public void squareButtonClicked(Event event) {
+        shapeFactory = new Square.Factory();
+    }
 
+    public void mousePressed(Event event) {
+        startX = ((MouseEvent)event).getX();
+        startY = ((MouseEvent)event).getY();
+    }
+
+    public void mouseReleased(Event event) {
+        double finishX = ((MouseEvent)event).getX();
+        double finishY = ((MouseEvent)event).getY();
+
+        Shape shape = shapeFactory.create(startX, startY, finishX, finishY);
+        Drawer drawer = DrawerFactory.getDrawer(shape.getClass());
+        drawer.draw(drawCanvas.getGraphicsContext2D(), shape);
     }
 }

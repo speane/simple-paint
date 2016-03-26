@@ -17,8 +17,30 @@ public class Ellipse extends Circle {
 
     public static final class Factory implements drawing.shapes.Factory<Ellipse> {
         @Override
-        public Ellipse create(double x, double y) {
-            return new Ellipse(x, y, 70, 130);
+        public Ellipse create(double startX, double startY, double finishX, double finishY) {
+            double x;
+            double y;
+            double width;
+            double height;
+
+            if (finishX < startX) {
+                x = finishX;
+                width = startX - finishX;
+            }
+            else {
+                x = startX;
+                width = finishX - startX;
+            }
+
+            if (finishY < startY) {
+                y = finishY;
+                height = startY - finishY;
+            }
+            else {
+                y = startY;
+                height = finishY - startY;
+            }
+            return new Ellipse(x, y, width, height);
         }
     }
 }

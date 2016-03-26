@@ -32,8 +32,8 @@ public class Line implements Shape {
 
     public static class Factory implements drawing.shapes.Factory<Line> {
         @Override
-        public Line create(double x, double y) {
-            return new Line(x, y, 100, 100);
+        public Line create(double startX, double startY, double finishX, double finishY) {
+            return new Line(startX, startY, finishX, finishY);
         }
     }
 }

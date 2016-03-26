@@ -14,7 +14,7 @@
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <Canvas fx:id="drawCanvas" height="398.0" onMousePressed="#mouseClicked" width="469.0" />
+            <Canvas fx:id="drawCanvas" height="398.0" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" width="469.0" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
