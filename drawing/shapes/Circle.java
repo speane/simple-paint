@@ -7,13 +7,11 @@ public class Circle implements Shape {
     private double x;
     private double y;
     private double width;
-    private double height;
 
-    public Circle(double x, double y, double width, double height) {
+    public Circle(double x, double y, double width) {
         this.x = x;
         this.y = y;
         this.width = width;
-        this.height = height;
     }
 
     public double getX() {
@@ -24,19 +22,10 @@ public class Circle implements Shape {
         return y;
     }
 
-    public double getWidth() {
-        return width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public static class Factory implements drawing.shapes.Factory<Circle> {
-
+    public static final class Factory implements drawing.shapes.Factory<Circle> {
         @Override
         public Circle create(double x, double y) {
-            return new Circle(x, y, 100, 100);
+            return new Circle(x, y, 100);
         }
     }
 }

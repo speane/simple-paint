@@ -29,4 +29,20 @@ public class Controller {
     public void lineButtonClicked(ActionEvent actionEvent) {
         shapeFactory = new Line.Factory();
     }
+
+    public void triangleButtonClicked(Event event) {
+        shapeFactory = new Triangle.Factory();
+    }
+
+    public void ellipseButtonClicked(Event event) {
+
+    }
+
+    public void rhombusButtonClicked(Event event) {
+
+    }
+
+    public void squareButtonClicked(Event event) {
+
+    }
 }
