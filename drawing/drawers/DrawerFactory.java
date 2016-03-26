@@ -1,5 +1,7 @@
 package drawing.drawers;
 
+import drawing.shapes.Circle;
+import drawing.shapes.Line;
 import drawing.shapes.Rectangle;
 
 import java.util.HashMap;
@@ -13,6 +15,8 @@ public class DrawerFactory {
     static {
         drawerMap = new HashMap<>();
         drawerMap.put(Rectangle.class, new RectangleDrawer());
+        drawerMap.put(Circle.class, new CirlceDrawer());
+        drawerMap.put(Line.class, new LineDrawer());
     }
     public static Drawer getDrawer(Class shapeType) {
         return drawerMap.get(shapeType);
