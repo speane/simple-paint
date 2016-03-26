@@ -3,13 +3,12 @@ package drawing.shapes;
 /**
  * Created by Evgeny Shilov on 26.03.2016.
  */
-public class Rhombus implements Shape {
-    private double[] xCoords;
-    private double[] yCoords;
-    private final int nPoints = 4;
-
+public class Rhombus extends Polygon {
     public Rhombus(double x, double y, double width, double height) {
+        nPoints = 4;
+
         xCoords = new double[nPoints];
+        yCoords = new double[nPoints];
 
         xCoords[0] = x + width / 2;
         yCoords[0] = y;
@@ -24,17 +23,6 @@ public class Rhombus implements Shape {
         yCoords[3] = y + height / 2;
     }
 
-    public double[] getxCoords() {
-        return xCoords;
-    }
-
-    public double[] getyCoords() {
-        return yCoords;
-    }
-
-    public int getnPoints() {
-        return nPoints;
-    }
 
     public static final class Factory implements drawing.shapes.Factory<Rhombus> {
         @Override

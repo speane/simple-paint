@@ -13,7 +13,8 @@ public class DrawerFactory {
     static {
         drawerMap = new HashMap<>();
         drawerMap.put(Rectangle.class, new RectangleDrawer());
-        drawerMap.put(Circle.class, new CirlceDrawer());
+        drawerMap.put(Circle.class, new CircleDrawer());
+        drawerMap.put(Ellipse.class, new EllipseDrawer());
         drawerMap.put(Line.class, new LineDrawer());
         PolygonDrawer polygonDrawer = new PolygonDrawer();
         drawerMap.put(Triangle.class, polygonDrawer);

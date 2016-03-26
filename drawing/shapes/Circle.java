@@ -22,6 +22,10 @@ public class Circle implements Shape {
         return y;
     }
 
+    public double getWidth() {
+        return width;
+    }
+
     public static final class Factory implements drawing.shapes.Factory<Circle> {
         @Override
         public Circle create(double x, double y) {

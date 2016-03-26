@@ -35,11 +35,11 @@ public class Controller {
     }
 
     public void ellipseButtonClicked(Event event) {
-
+        shapeFactory = new Ellipse.Factory();
     }
 
     public void rhombusButtonClicked(Event event) {
-
+        shapeFactory = new Rhombus.Factory();
     }
 
     public void squareButtonClicked(Event event) {

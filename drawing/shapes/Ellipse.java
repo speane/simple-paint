@@ -11,6 +11,10 @@ public class Ellipse extends Circle {
         this.height = height;
     }
 
+    public double getHeight() {
+        return height;
+    }
+
     public static final class Factory implements drawing.shapes.Factory<Ellipse> {
         @Override
         public Ellipse create(double x, double y) {
