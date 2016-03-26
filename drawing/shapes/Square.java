@@ -35,26 +35,21 @@ public class Square implements Shape {
             double height;
 
             if (finishX < startX) {
-                x = finishX;
                 width = startX - finishX;
+                x = startX - width;
             }
             else {
-                x = startX;
                 width = finishX - startX;
+                x = startX;
             }
 
             if (finishY < startY) {
-                y = finishY;
-                height = startY - finishY;
+                y = startY - width;
             }
             else {
                 y = startY;
-                height = finishY - startY;
             }
 
-            if (width > height) {
-                width = height;
-            }
             return new Square(x, y, width);
         }
     }
