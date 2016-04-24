@@ -15,18 +15,35 @@
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <Canvas fx:id="drawCanvas" height="621.0" onMouseDragged="#mouseDragged" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" width="751.0" />
+            <VBox layoutX="326.0" layoutY="194.0" prefHeight="200.0" prefWidth="100.0" />
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+      <GridPane fx:id="sidePane" layoutX="10.0" layoutY="111.0" prefHeight="379.0" prefWidth="100.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Button layoutX="14.0" layoutY="85.0" mnemonicParsing="false" onAction="#rectangleButtonClicked" prefHeight="25.0" prefWidth="96.0" text="RECTANGLE" />
-            <Button layoutX="14.0" layoutY="124.0" mnemonicParsing="false" onAction="#circleButtonClicked" prefHeight="25.0" prefWidth="96.0" text="CIRCLE" />
-            <Button layoutX="14.0" layoutY="167.0" mnemonicParsing="false" onAction="#lineButtonClicked" prefHeight="25.0" prefWidth="96.0" text="LINE" />
-            <Button layoutX="14.0" layoutY="205.0" mnemonicParsing="false" onMousePressed="#triangleButtonClicked" prefHeight="25.0" prefWidth="96.0" text="TRIANGLE" />
-            <Button layoutX="14.0" layoutY="248.0" mnemonicParsing="false" onMousePressed="#ellipseButtonClicked" prefHeight="25.0" prefWidth="96.0" text="ELLIPSE" />
-            <Button layoutX="14.0" layoutY="288.0" mnemonicParsing="false" onMousePressed="#rhombusButtonClicked" prefHeight="25.0" prefWidth="96.0" text="RHOMBUS" />
-            <Button layoutX="14.0" layoutY="328.0" mnemonicParsing="false" onMousePressed="#squareButtonClicked" prefHeight="25.0" prefWidth="96.0" text="SQUARE" />
-            <Button layoutX="36.0" layoutY="480.0" mnemonicParsing="false" onAction="#clearButtonClicked" text="CLEAR" />
-            <Button layoutX="36.0" layoutY="532.0" mnemonicParsing="false" onAction="#undoButtonClicked" text="UNDO" />
-         </children></AnchorPane>
+            <Button mnemonicParsing="false" onAction="#rectangleButtonClicked" prefHeight="25.0" prefWidth="96.0" text="RECTANGLE" />
+            <Button mnemonicParsing="false" onAction="#circleButtonClicked" prefHeight="25.0" prefWidth="96.0" text="CIRCLE" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#lineButtonClicked" prefHeight="25.0" prefWidth="96.0" text="LINE" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onMousePressed="#triangleButtonClicked" prefHeight="25.0" prefWidth="96.0" text="TRIANGLE" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onMousePressed="#ellipseButtonClicked" prefHeight="25.0" prefWidth="96.0" text="ELLIPSE" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onMousePressed="#rhombusButtonClicked" prefHeight="25.0" prefWidth="96.0" text="RHOMBUS" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" onMousePressed="#squareButtonClicked" prefHeight="25.0" prefWidth="96.0" text="SQUARE" GridPane.rowIndex="6" />
+            <Button mnemonicParsing="false" onAction="#undoButtonClicked" prefHeight="25.0" prefWidth="99.0" text="UNDO" GridPane.rowIndex="8" />
+            <Button mnemonicParsing="false" onAction="#clearButtonClicked" prefHeight="25.0" prefWidth="99.0" text="CLEAR" GridPane.rowIndex="9" />
+         </children>
+      </GridPane>
   </items>
 </SplitPane>

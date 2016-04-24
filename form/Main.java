@@ -9,8 +9,10 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("form.fxml"));
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        Parent root = fxmlLoader.load(getClass().getResource("form.fxml"));
+        Controller controller = fxmlLoader.getController();
         primaryStage.setTitle("Simple Paint");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

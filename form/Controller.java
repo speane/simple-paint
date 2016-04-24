@@ -1,23 +1,51 @@
 package form;
 
-import drawing.drawers.Drawer;
-import drawing.drawers.DrawerFactory;
+import drawing.drawers.*;
 import drawing.shapes.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 import java.util.Stack;
 
-public class Controller {
+public class Controller implements PaintController {
     public Canvas drawCanvas;
-    private Factory shapeFactory = new Rectangle.Factory();
-    private Stack<Shape> shapeStack = new Stack<>();
+    public GridPane sidePane;
+    private Factory shapeFactory;
+    private DrawerFactory drawerFactory;
+    private Stack<Shape> shapeStack;
     private Shape currentShape;
-
     private double startX;
     private double startY;
+
+    public Controller() {
+        shapeFactory = new Rectangle.Factory();
+
+        shapeStack = new Stack<>();
+
+        drawerFactory = new DrawerFactory();
+        drawerFactory.addDrawer(Circle.class, new CircleDrawer());
+        drawerFactory.addDrawer(Ellipse.class, new EllipseDrawer());
+        drawerFactory.addDrawer(Line.class, new LineDrawer());
+        drawerFactory.addDrawer(Rectangle.class, new RectangleDrawer());
+        drawerFactory.addDrawer(Rhombus.class, new PolygonDrawer());
+        drawerFactory.addDrawer(Triangle.class, new PolygonDrawer());
+        drawerFactory.addDrawer(Square.class, new SquareDrawer());
+    }
+
+    public void setShapeFactory(Factory shapeFactory) {
+        this.shapeFactory = shapeFactory;
+    }
+
+    public Stack<Shape> getShapeStack() {
+        return shapeStack;
+    }
+
+    public Canvas getDrawCanvas() {
+        return drawCanvas;
+    }
 
     public void rectangleButtonClicked(ActionEvent actionEvent) {
         shapeFactory = new Rectangle.Factory();
@@ -57,7 +85,7 @@ public class Controller {
     }
 
     public void drawShape(Shape shape) {
-        Drawer drawer = DrawerFactory.getDrawer(shape.getClass());
+        Drawer drawer = drawerFactory.getDrawer(shape.getClass());
         drawer.draw(drawCanvas.getGraphicsContext2D(), shape);
     }
 
@@ -88,7 +116,8 @@ public class Controller {
 
 
     public void undoButtonClicked(ActionEvent actionEvent) {
-        shapeStack.pop();
+        if (!shapeStack.isEmpty())
+            shapeStack.pop();
         repaint();
     }
 }
