@@ -76,7 +76,6 @@ public class PluginLoader {
             return false;
         }
         String signing = (String) value;
-        System.out.println(signing);
         value = jarFile.getManifest().getMainAttributes().get(new Attributes.Name("Date"));
         if (value == null) {
             return false;
@@ -84,9 +83,8 @@ public class PluginLoader {
 
         String date = (String) value;
         String newSigning = new JarSigner().getSigning(file, dateFormat.parse(date));
-        System.out.println(newSigning);
         if (newSigning.equals(signing)) {
-            if (dateFormat.parse("2016/04/23 00:00:00").before(dateFormat.parse(date))) {
+            if (dateFormat.parse("2016/04/24 00:00:00").before(dateFormat.parse(date))) {
                 return true;
             }
         }
