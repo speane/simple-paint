@@ -42,7 +42,6 @@ public class Form extends HBox {
         addButton("RECTANGLE", event -> painter.setShapeFactory(new Rectangle.Factory()));
         addButton("CIRCLE", event -> painter.setShapeFactory(new Circle.Factory()));
         addButton("SQUARE", event -> painter.setShapeFactory(new Square.Factory()));
-        addButton("ELLIPSE", event -> painter.setShapeFactory(new Ellipse.Factory()));
         addButton("TRIANGLE", event -> painter.setShapeFactory(new Triangle.Factory()));
         addButton("RHOMBUS", event -> painter.setShapeFactory(new Rhombus.Factory()));
         addButton("LINE", event -> painter.setShapeFactory(new Line.Factory()));

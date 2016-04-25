@@ -27,7 +27,6 @@ public class Controller implements PaintController {
 
         drawerFactory = new DrawerFactory();
         drawerFactory.addDrawer(Circle.class, new CircleDrawer());
-        drawerFactory.addDrawer(Ellipse.class, new EllipseDrawer());
         drawerFactory.addDrawer(Line.class, new LineDrawer());
         drawerFactory.addDrawer(Rectangle.class, new RectangleDrawer());
         drawerFactory.addDrawer(Rhombus.class, new PolygonDrawer());
@@ -61,10 +60,6 @@ public class Controller implements PaintController {
 
     public void triangleButtonClicked(Event event) {
         shapeFactory = new Triangle.Factory();
-    }
-
-    public void ellipseButtonClicked(Event event) {
-        shapeFactory = new Ellipse.Factory();
     }
 
     public void rhombusButtonClicked(Event event) {

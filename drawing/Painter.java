@@ -53,7 +53,6 @@ public class Painter {
 
         drawerFactory = new DrawerFactory();
         drawerFactory.addDrawer(Circle.class, new CircleDrawer());
-        drawerFactory.addDrawer(Ellipse.class, new EllipseDrawer());
         drawerFactory.addDrawer(Line.class, new LineDrawer());
         drawerFactory.addDrawer(Rectangle.class, new RectangleDrawer());
         drawerFactory.addDrawer(Rhombus.class, new PolygonDrawer());
