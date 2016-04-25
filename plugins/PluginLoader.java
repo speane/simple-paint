@@ -1,5 +1,7 @@
 package plugins;
 
+import signer.JarSigner;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -7,8 +9,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.NotDirectoryException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -27,11 +33,9 @@ public class PluginLoader {
 
         for (File jar : pluginsDir.listFiles()) {
             try {
-                /*ClassLoader classLoader = new URLClassLoader(
-                        new URL[]{ jar.toURI().toURL() },
-                        getClass().getClassLoader()
-                );*/
-                //
+                if (!checkPlugin(jar)) {
+                    continue;
+                }
                 JarFile jarFile = new JarFile(jar);
                 Enumeration<JarEntry> jarEntries = jarFile.entries();
 
@@ -56,20 +60,36 @@ public class PluginLoader {
                         }
                     }
                 }
-
-                //
-/*
-                Class<?> clazz = Class.forName("ClearPlugin", true, classLoader);
-                Class<? extends Plugin> newClass = clazz.asSubclass(Plugin.class);
-                Constructor<? extends Plugin> constructor = newClass.getConstructor();
-
-                plugins.add(constructor.newInstance());*/
             } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
-                    InstantiationException | InvocationTargetException | IOException ex) {
+                    InstantiationException | InvocationTargetException | IOException | ParseException ex) {
                 System.out.println(ex);
             }
         }
 
         return plugins;
+    }
+    private boolean checkPlugin(File file) throws ParseException, IOException {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        JarFile jarFile = new JarFile(file);
+        Object value = jarFile.getManifest().getMainAttributes().get(new Attributes.Name("Sign"));
+        if (value == null) {
+            return false;
+        }
+        String signing = (String) value;
+        System.out.println(signing);
+        value = jarFile.getManifest().getMainAttributes().get(new Attributes.Name("Date"));
+        if (value == null) {
+            return false;
+        }
+
+        String date = (String) value;
+        String newSigning = new JarSigner().getSigning(file, dateFormat.parse(date));
+        System.out.println(newSigning);
+        if (newSigning.equals(signing)) {
+            if (dateFormat.parse("2016/04/23 00:00:00").before(dateFormat.parse(date))) {
+                return true;
+            }
+        }
+        return false;
     }
 }
