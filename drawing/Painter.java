@@ -2,6 +2,7 @@ package drawing;
 
 import drawing.drawers.*;
 import drawing.shapes.*;
+import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 
@@ -11,8 +12,13 @@ import java.util.Stack;
  * Created by Evgeny Shilov on 24.04.2016.
  */
 public class Painter {
-    private final int CANVAS_WIDTH = 600;
-    private final int CANVAS_HEIGHT = 600;
+    public final int CANVAS_WIDTH = 600;
+    public final int CANVAS_HEIGHT = 600;
+
+
+    private EventHandler<MouseEvent> mousePressedEventHandler;
+    private EventHandler<MouseEvent> mouseDraggedEventHandler;
+    private EventHandler<MouseEvent> mouseReleasedEventHandler;
 
     private Canvas canvas;
     private Factory shapeFactory;
@@ -22,11 +28,28 @@ public class Painter {
     private double startX;
     private double startY;
 
+    private final EventHandler<MouseEvent> defaultMousePressedEventHandler = event -> {
+        startX = event.getX();
+        startY = event.getY();
+    };
+
+    private final EventHandler<MouseEvent> defaultMouseDraggedEventHandler = event -> {
+        drawCurrentShape(event.getX(), event.getY());
+    };
+
+    private final EventHandler<MouseEvent> defaultMouseReleasedEventHandler = event -> {
+        shapeStack.push(currentShape);
+    };
+
     public Painter(Canvas canvas) {
         this.canvas = canvas;
-        shapeFactory = new Circle.Factory();
+        shapeFactory = new Rectangle.Factory();
 
         shapeStack = new Stack<>();
+
+        mousePressedEventHandler = defaultMousePressedEventHandler;
+        mouseDraggedEventHandler = defaultMouseDraggedEventHandler;
+        mouseReleasedEventHandler = defaultMouseReleasedEventHandler;
 
         drawerFactory = new DrawerFactory();
         drawerFactory.addDrawer(Circle.class, new CircleDrawer());
@@ -40,17 +63,23 @@ public class Painter {
         initCanvas();
     }
 
+    public Stack<Shape> getShapeStack() {
+        return shapeStack;
+    }
 
     private void initCanvas() {
         canvas.setWidth(CANVAS_WIDTH);
         canvas.setHeight(CANVAS_HEIGHT);
 
-        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            setStartX(event.getX());
-            setStartY(event.getY());
-        });
-        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> drawCurrentShape(event.getX(), event.getY()));
-        canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> shapeStack.push(currentShape));
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, mousePressedEventHandler);
+        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouseDraggedEventHandler);
+        canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, mouseReleasedEventHandler);
+    }
+
+    public void changeMousePressedEventHandler(EventHandler<MouseEvent> mousePressedEventHandler) {
+        canvas.removeEventHandler(MouseEvent.MOUSE_PRESSED, this.mousePressedEventHandler);
+        this.mousePressedEventHandler = mousePressedEventHandler;
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, this.mousePressedEventHandler);
     }
 
     public void drawCurrentShape(double finishX, double finishY) {
@@ -90,5 +119,9 @@ public class Painter {
 
     public void setCanvas(Canvas canvas) {
         this.canvas = canvas;
+    }
+
+    public DrawerFactory getDrawerFactory() {
+        return drawerFactory;
     }
 }
