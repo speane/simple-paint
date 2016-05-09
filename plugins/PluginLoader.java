@@ -40,7 +40,8 @@ public class PluginLoader {
                 Enumeration<JarEntry> jarEntries = jarFile.entries();
 
                 URL[] urls = { new URL("jar:file:" + jar+"!/") };
-                URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls);
+                URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls, Thread.currentThread().getContextClassLoader());
+                Thread.currentThread().setContextClassLoader(urlClassLoader);
 
                 while (jarEntries.hasMoreElements()) {
                     JarEntry entry = jarEntries.nextElement();
@@ -51,6 +52,7 @@ public class PluginLoader {
                     String className = entry.getName().substring(0,entry.getName().length() - 6);
                     className = className.replace('/', '.');
                     Class<?> clazz = urlClassLoader.loadClass(className);
+                    Thread.currentThread().setContextClassLoader(urlClassLoader);
                     Class[] interfaces = clazz.getInterfaces();
                     for (Class tempInterface : interfaces) {
                         if (tempInterface.getName().equals("plugins.Plugin")) {

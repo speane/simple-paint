@@ -20,6 +20,10 @@ public class Triangle extends Polygon {
         yCoords[2] = y + height;
     }
 
+    public Triangle() {
+        nPoints = -1;
+    }
+
     public static final class Factory implements drawing.shapes.Factory<Triangle> {
         @Override
         public Triangle create(double startX, double startY, double finishX, double finishY) {

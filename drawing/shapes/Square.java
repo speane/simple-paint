@@ -9,7 +9,7 @@ public class Square implements Shape {
     protected double width;
 
     public Square() {
-
+        x = y = width = -1;
     }
 
     public Square(double x, double y, double width) {

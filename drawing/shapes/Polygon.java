@@ -8,6 +8,11 @@ public abstract class Polygon implements Shape {
     protected double[] yCoords;
     protected int nPoints;
 
+    public Polygon() {
+        xCoords = yCoords = new double[0];
+        nPoints = -1;
+    }
+
     public double[] getxCoords() {
         return xCoords;
     }

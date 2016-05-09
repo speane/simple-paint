@@ -57,11 +57,11 @@ public class Form extends HBox {
             if (selectedFile != null) {
                 painter.getShapeStack().clear();
                 try {
-                    painter.getShapeStack().addAll(serializer.deserializeList(Rectangle.class, selectedFile));
-                } catch (IOException e) {
+                    painter.getShapeStack().addAll(serializer.deserializeList(Shape.class, selectedFile));
+                } catch (Exception e) {
                     showAlert(Alert.AlertType.ERROR, "Cannot open file");
-                    System.out.println(e);
                 }
+                painter.repaint();
             }
         });
         addButton("Save", event -> {
@@ -81,6 +81,7 @@ public class Form extends HBox {
                 }
             }
         });
+        moveSidePanelRowIndex(2);
         addButton("RECTANGLE", event -> painter.setShapeFactory(new Rectangle.Factory()));
         addButton("CIRCLE", event -> painter.setShapeFactory(new Circle.Factory()));
         addButton("SQUARE", event -> painter.setShapeFactory(new Square.Factory()));

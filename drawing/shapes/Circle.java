@@ -3,10 +3,16 @@ package drawing.shapes;
 /**
  * Created by Evgeny Shilov on 26.03.2016.
  */
+
+
 public class Circle implements Shape {
     private double x;
     private double y;
     private double width;
+
+    public Circle() {
+        x = y = width = -1;
+    }
 
     public Circle(double x, double y, double width) {
         this.x = x;

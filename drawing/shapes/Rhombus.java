@@ -23,6 +23,9 @@ public class Rhombus extends Polygon {
         yCoords[3] = y + height / 2;
     }
 
+    public Rhombus() {
+        nPoints = 0;
+    }
 
     public static final class Factory implements drawing.shapes.Factory<Rhombus> {
         @Override
