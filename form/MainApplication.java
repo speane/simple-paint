@@ -24,6 +24,7 @@ public class MainApplication extends Application {
         initPrimaryStage(primaryStage);
         primaryStage.setScene(new Scene(form));
         primaryStage.show();
+        form.moveSidePanelRowIndex(2);
         loadPlugins();
     }
 

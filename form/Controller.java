@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 
 import java.util.Stack;
 
-public class Controller implements PaintController {
+public class Controller{
     public Canvas drawCanvas;
     public GridPane sidePane;
     private Factory shapeFactory;

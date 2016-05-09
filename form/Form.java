@@ -4,11 +4,18 @@ import drawing.Painter;
 import drawing.shapes.*;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
+import serialization.Serializer;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Evgeny Shilov on 25.04.2016.
@@ -18,6 +25,7 @@ public class Form extends HBox {
     private final int SHAPE_BUTTON_HEIGHT = 30;
     private int rowIndex;
     private Painter painter;
+    private Serializer serializer;
 
     private Canvas canvas;
     private GridPane sidePanel;
@@ -25,6 +33,7 @@ public class Form extends HBox {
     public Form() {
         canvas = new Canvas();
         painter = new Painter(canvas);
+        serializer = new Serializer();
         sidePanel = new GridPane();
         initSidePanel();
         this.getChildren().addAll(canvas, sidePanel);
@@ -39,6 +48,39 @@ public class Form extends HBox {
     }
 
     private void initSidePanel() {
+        addButton("Open", event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose file");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Файлы рисунка", "*.draw"));
+            File selectedFile = fileChooser.showOpenDialog(null);
+            if (selectedFile != null) {
+                painter.getShapeStack().clear();
+                try {
+                    painter.getShapeStack().addAll(serializer.deserializeList(Rectangle.class, selectedFile));
+                } catch (IOException e) {
+                    showAlert(Alert.AlertType.ERROR, "Cannot open file");
+                    System.out.println(e);
+                }
+            }
+        });
+        addButton("Save", event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose save file");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Файлы рисунка", "*.draw"));
+            File selectedFile = fileChooser.showSaveDialog(null);
+            if (selectedFile != null) {
+                try {
+                    serializer.serializeList(
+                            painter.getShapeStack().subList(0, painter.getShapeStack().size()),
+                            selectedFile
+                    );
+                } catch (IOException e) {
+                    showAlert(Alert.AlertType.ERROR, "Cannot save to file");
+                }
+            }
+        });
         addButton("RECTANGLE", event -> painter.setShapeFactory(new Rectangle.Factory()));
         addButton("CIRCLE", event -> painter.setShapeFactory(new Circle.Factory()));
         addButton("SQUARE", event -> painter.setShapeFactory(new Square.Factory()));
@@ -63,5 +105,10 @@ public class Form extends HBox {
 
     public Painter getPainter() {
         return painter;
+    }
+
+    private void showAlert(Alert.AlertType alertType, String message) {
+        new Alert(alertType, message).showAndWait()
+                .filter(response -> response == ButtonType.OK);
     }
 }

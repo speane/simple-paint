@@ -8,6 +8,10 @@ public class Square implements Shape {
     protected double y;
     protected double width;
 
+    public Square() {
+
+    }
+
     public Square(double x, double y, double width) {
         this.x = x;
         this.y = y;

@@ -80,8 +80,8 @@ public class PluginLoader {
         if (value == null) {
             return false;
         }
-
         String date = (String) value;
+
         String newSigning = new JarSigner().getSigning(file, dateFormat.parse(date));
         if (newSigning.equals(signing)) {
             if (dateFormat.parse("2016/04/24 00:00:00").before(dateFormat.parse(date))) {
