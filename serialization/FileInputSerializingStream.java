@@ -1,5 +1,7 @@
 package serialization;
 
+import plugins.modifiers.StructureModifier;
+
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -14,7 +16,7 @@ public class FileInputSerializingStream {
         inputStream = new DataInputStream(new FileInputStream(file));
     }
 
-    public <T> T read(Class<T> type) throws IOException {
+    public <T> T read(Class<T> type, StructureModifier structureModifier) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         for (int i = 0; i < 4; i++) {
@@ -28,7 +30,11 @@ public class FileInputSerializingStream {
             byteArrayOutputStream.write(inputStream.read());
         }
 
-        return BSONSerializer.deserialize(byteArrayOutputStream.toByteArray(), type);
+        byte[] data = byteArrayOutputStream.toByteArray();
+
+        structureModifier.preAction(data);
+
+        return BSONSerializer.deserialize(data, type);
     }
 
     public boolean hasMoreElements() throws IOException {

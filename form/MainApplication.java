@@ -3,10 +3,6 @@ package form;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import plugins.Plugin;
-import plugins.PluginLoader;
-
-import java.nio.file.NotDirectoryException;
 
 /**
  * Created by Evgeny Shilov on 24.04.2016.
@@ -25,17 +21,11 @@ public class MainApplication extends Application {
         primaryStage.setScene(new Scene(form));
         primaryStage.show();
         form.moveSidePanelRowIndex(2);
-        loadPlugins();
+        form.loadPlugins("plugins/");
     }
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    private void loadPlugins() throws NotDirectoryException {
-        for (Plugin plugin : new PluginLoader().loadPlugins("plugins/")) {
-            plugin.setup(form);
-        }
     }
 
     private void initPrimaryStage(Stage primaryStage) {

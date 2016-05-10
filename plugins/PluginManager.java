@@ -1,12 +1,39 @@
 package plugins;
 
-/**
- * Created by Evgeny Shilov on 25.04.2016.
- */
-public class PluginLoader {
-    /*public ArrayList<Plugin> loadPlugins(String path) throws NotDirectoryException {
-        ArrayList<Plugin> plugins = new ArrayList<>();
+import form.Form;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.NotDirectoryException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+
+/**
+ * Created by Evgeny Shilov on 10.05.2016.
+ */
+public class PluginManager {
+    private PluginVerifier verifier;
+    private ArrayList<Plugin> plugins;
+
+    public PluginManager() {
+        verifier = new PluginVerifier();
+        plugins = new ArrayList<>();
+    }
+
+    public void setupAll(Form form) {
+        for (Plugin plugin : plugins) {
+            plugin.setup(form);
+        }
+    }
+
+    public void loadPlugins(String path) throws NotDirectoryException {
         File pluginsDir = new File(path);
 
         if (!pluginsDir.exists() || !pluginsDir.isDirectory()) {
@@ -15,8 +42,8 @@ public class PluginLoader {
 
         for (File jar : pluginsDir.listFiles()) {
             try {
-                if (!checkPlugin(jar)) {
-                    continue;
+                if (!verifier.verify(jar)) {
+                    //continue;
                 }
                 JarFile jarFile = new JarFile(jar);
                 Enumeration<JarEntry> jarEntries = jarFile.entries();
@@ -49,29 +76,5 @@ public class PluginLoader {
                 System.out.println(ex);
             }
         }
-
-        return plugins;
-    }*/
-    /*private boolean checkPlugin(File file) throws ParseException, IOException {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        JarFile jarFile = new JarFile(file);
-        Object value = jarFile.getManifest().getMainAttributes().get(new Attributes.Name("Sign"));
-        if (value == null) {
-            return false;
-        }
-        String signing = (String) value;
-        value = jarFile.getManifest().getMainAttributes().get(new Attributes.Name("Date"));
-        if (value == null) {
-            return false;
-        }
-        String date = (String) value;
-
-        String newSigning = new JarSigner().getSigning(file, dateFormat.parse(date));
-        if (newSigning.equals(signing)) {
-            if (dateFormat.parse("2016/04/24 00:00:00").before(dateFormat.parse(date))) {
-                return true;
-            }
-        }
-        return false;
-    }*/
+    }
 }

@@ -1,5 +1,7 @@
 package serialization;
 
+import plugins.modifiers.StructureModifier;
+
 import java.io.*;
 
 /**
@@ -9,7 +11,7 @@ public class FileOutputSerializingStream {
 
     private DataOutputStream outputStream;
 
-    public FileOutputSerializingStream(File file) throws FileNotFoundException {
+    public FileOutputSerializingStream(File file, StructureModifier structureModifier) throws FileNotFoundException {
         outputStream = new DataOutputStream(new FileOutputStream(file));
     }
 

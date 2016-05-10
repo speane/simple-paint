@@ -12,10 +12,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import plugins.PluginManager;
 import serialization.Serializer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.NotDirectoryException;
 
 /**
  * Created by Evgeny Shilov on 25.04.2016.
@@ -26,6 +28,7 @@ public class Form extends HBox {
     private int rowIndex;
     private Painter painter;
     private Serializer serializer;
+    private PluginManager pluginManager;
 
     private Canvas canvas;
     private GridPane sidePanel;
@@ -34,9 +37,15 @@ public class Form extends HBox {
         canvas = new Canvas();
         painter = new Painter(canvas);
         serializer = new Serializer();
+        pluginManager = new PluginManager();
         sidePanel = new GridPane();
         initSidePanel();
         this.getChildren().addAll(canvas, sidePanel);
+    }
+
+    public void loadPlugins(String path) throws NotDirectoryException {
+        pluginManager.loadPlugins(path);
+        pluginManager.setupAll(this);
     }
 
     public Canvas getCanvas() {
@@ -111,5 +120,9 @@ public class Form extends HBox {
     private void showAlert(Alert.AlertType alertType, String message) {
         new Alert(alertType, message).showAndWait()
                 .filter(response -> response == ButtonType.OK);
+    }
+
+    public Serializer getSerializer() {
+        return serializer;
     }
 }
