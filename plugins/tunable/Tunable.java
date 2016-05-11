@@ -7,4 +7,5 @@ import form.PluginSettingsForm;
  */
 public interface Tunable {
     void setSettingsForm(PluginSettingsForm form);
+    void applyChanges();
 }

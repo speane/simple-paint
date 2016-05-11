@@ -16,9 +16,8 @@ public class FileOutputSerializingStream {
         outputStream = new DataOutputStream(new FileOutputStream(file));
     }
 
-    public <T> void write(T object, StructureModifier structureModifier) throws IOException {
+    public <T> void write(T object) throws IOException {
         byte[] objectBytes = BSONSerializer.serialize(object);
-        structureModifier.preAction(objectBytes);
         outputStream.write(objectBytes);
     }
 

@@ -17,7 +17,7 @@ public class FileInputSerializingStream {
         inputStream = new DataInputStream(new FileInputStream(file));
     }
 
-    public <T> T read(Class<T> type, StructureModifier structureModifier) throws IOException {
+    public <T> T read(Class<T> type) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         for (int i = 0; i < 4; i++) {
@@ -32,8 +32,6 @@ public class FileInputSerializingStream {
         }
 
         byte[] data = byteArrayOutputStream.toByteArray();
-
-        structureModifier.postAction(data);
 
         return BSONSerializer.deserialize(data, type);
     }

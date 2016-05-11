@@ -12,16 +12,17 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import plugins.PluginManager;
+import plugins.tunable.Tunable;
 import serialization.Serializer;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.NotDirectoryException;
+import java.util.ArrayList;
 
 /**
  * Created by Evgeny Shilov on 25.04.2016.
@@ -33,6 +34,7 @@ public class Form extends HBox {
     private Painter painter;
     private Serializer serializer;
     private PluginManager pluginManager;
+    private ArrayList<Tunable> tunablePlugins;
 
     private Canvas canvas;
     private GridPane sidePanel;
@@ -42,6 +44,7 @@ public class Form extends HBox {
         painter = new Painter(canvas);
         serializer = new Serializer();
         pluginManager = new PluginManager();
+        tunablePlugins = new ArrayList<>();
         sidePanel = new GridPane();
         initSidePanel();
         this.getChildren().addAll(canvas, sidePanel);
@@ -94,16 +97,17 @@ public class Form extends HBox {
                 }
             }
         });
-        moveSidePanelRowIndex(2);
+        moveSidePanelRowIndex(1);
         addButton("Plugin Settings", event -> {
             Stage stage = new Stage();
-            stage.setWidth(350);
-            stage.setHeight(200);
+            stage.setWidth(600);
+            stage.setHeight(300);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Plugin settings");
-            stage.setScene(new Scene(new PluginSettingsForm()));
+            stage.setScene(new Scene(new PluginSettingsForm(tunablePlugins)));
             stage.show();
         });
+        moveSidePanelRowIndex(1);
         addButton("RECTANGLE", event -> painter.setShapeFactory(new Rectangle.Factory()));
         addButton("CIRCLE", event -> painter.setShapeFactory(new Circle.Factory()));
         addButton("SQUARE", event -> painter.setShapeFactory(new Square.Factory()));
@@ -137,5 +141,9 @@ public class Form extends HBox {
 
     public Serializer getSerializer() {
         return serializer;
+    }
+
+    public ArrayList<Tunable> getTunablePlugins() {
+        return tunablePlugins;
     }
 }
