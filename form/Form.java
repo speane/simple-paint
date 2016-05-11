@@ -117,7 +117,7 @@ public class Form extends HBox {
         return painter;
     }
 
-    private void showAlert(Alert.AlertType alertType, String message) {
+    public void showAlert(Alert.AlertType alertType, String message) {
         new Alert(alertType, message).showAndWait()
                 .filter(response -> response == ButtonType.OK);
     }

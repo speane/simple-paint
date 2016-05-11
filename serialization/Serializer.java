@@ -5,7 +5,6 @@ import plugins.modifiers.StructureModifier;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -19,8 +18,8 @@ public class Serializer {
     }
 
     public <T> void serialize(T object, File file) throws IOException {
-        FileOutputSerializingStream fileOutputSerializingStream = new FileOutputSerializingStream(file, structureModifier);
-        fileOutputSerializingStream.write(object);
+        FileOutputSerializingStream fileOutputSerializingStream = new FileOutputSerializingStream(file);
+        fileOutputSerializingStream.write(object, structureModifier);
         fileOutputSerializingStream.close();
     }
 
@@ -30,21 +29,23 @@ public class Serializer {
         return fileInputSerializingStream.read(type, structureModifier);
     }
 
-    public <T> List<T> deserializeList(Class<? extends T> type, File file) throws IOException {
-        ArrayList<T> result = new ArrayList<>();
+    public <T> List<T> deserializeList(Class<T> type, File file) throws IOException {
+        /*ArrayList<T> result = new ArrayList<>();
         FileInputSerializingStream fileInputSerializingStream = new FileInputSerializingStream(file);
         while (fileInputSerializingStream.hasMoreElements()) {
             result.add(fileInputSerializingStream.read(type, structureModifier));
         }
+        return result;*/
+        FileInputSerializingStream fileInputSerializingStream = new FileInputSerializingStream(file);
+        ArrayList<T> result = fileInputSerializingStream.readListWithModification(type, structureModifier);
+        fileInputSerializingStream.close();
+
         return result;
     }
 
     public <T> void serializeList(List<T> list, File file) throws IOException {
-        FileOutputSerializingStream fileOutputSerializingStream = new FileOutputSerializingStream(file, structureModifier);
-        Iterator iterator = list.iterator();
-        while (iterator.hasNext()) {
-            fileOutputSerializingStream.write(iterator.next());
-        }
+        FileOutputSerializingStream fileOutputSerializingStream = new FileOutputSerializingStream(file);
+        fileOutputSerializingStream.writeListWithModification(list, structureModifier);
         fileOutputSerializingStream.close();
     }
 

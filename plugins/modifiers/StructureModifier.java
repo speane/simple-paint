@@ -13,16 +13,18 @@ public class StructureModifier {
         modifiers = new ArrayList<>();
     }
 
-    public void preAction(byte[] data) {
+    public byte[] preAction(byte[] data) {
         for (Modifier modifier : modifiers) {
-            modifier.preAction(data);
+            data = modifier.preAction(data);
         }
+        return data;
     }
 
-    public void postAction(byte[] data) {
+    public byte[] postAction(byte[] data) {
         for (Modifier modifier : modifiers) {
-            modifier.postAction(data);
+            data = modifier.postAction(data);
         }
+        return data;
     }
 
     public void addModifier(Modifier modifier) {
