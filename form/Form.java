@@ -3,6 +3,7 @@ package form;
 import drawing.Painter;
 import drawing.shapes.*;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -11,7 +12,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import plugins.PluginManager;
 import serialization.Serializer;
 
@@ -91,6 +95,15 @@ public class Form extends HBox {
             }
         });
         moveSidePanelRowIndex(2);
+        addButton("Plugin Settings", event -> {
+            Stage stage = new Stage();
+            stage.setWidth(350);
+            stage.setHeight(200);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Plugin settings");
+            stage.setScene(new Scene(new PluginSettingsForm()));
+            stage.show();
+        });
         addButton("RECTANGLE", event -> painter.setShapeFactory(new Rectangle.Factory()));
         addButton("CIRCLE", event -> painter.setShapeFactory(new Circle.Factory()));
         addButton("SQUARE", event -> painter.setShapeFactory(new Square.Factory()));
