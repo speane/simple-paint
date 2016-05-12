@@ -1,7 +1,6 @@
 package plugins.modifiers;
 
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 /**
  * Created by Evgeny Shilov on 10.05.2016.
@@ -28,14 +27,24 @@ public class StructureModifier {
     }
 
     public void addModifier(Modifier modifier) {
-        modifiers.add(modifier);
+        if (!modifiers.contains(modifier)) {
+            modifiers.add(modifier);
+        }
     }
 
     public void removeModifier(Modifier modifier) {
-        try {
+        if (modifiers.contains(modifier)) {
             modifiers.remove(modifier);
-        } catch (NoSuchElementException e) {
-            System.out.println(e);
         }
+    }
+
+    @Override
+    public String toString() {
+        String result = "";
+        for (Modifier modifier : modifiers) {
+            result += modifier;
+        }
+
+        return result;
     }
 }

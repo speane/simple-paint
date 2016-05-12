@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.NotDirectoryException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Evgeny Shilov on 25.04.2016.
@@ -71,13 +72,15 @@ public class Form extends HBox {
                     new FileChooser.ExtensionFilter("Файлы рисунка", "*.draw"));
             File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
-                painter.getShapeStack().clear();
                 try {
-                    painter.getShapeStack().addAll(serializer.deserializeList(Shape.class, selectedFile));
+                    List shapes = serializer.deserializeList(Shape.class, selectedFile);
+                    painter.getShapeStack().clear();
+                    painter.getShapeStack().addAll(shapes);
+                    painter.repaint();
                 } catch (Exception e) {
+                    System.out.println(e);
                     showAlert(Alert.AlertType.ERROR, "Cannot open file");
                 }
-                painter.repaint();
             }
         });
         addButton("Save", event -> {

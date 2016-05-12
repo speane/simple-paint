@@ -19,14 +19,14 @@ public class Serializer {
 
     public <T> void serialize(T object, File file) throws IOException {
         FileOutputSerializingStream fileOutputSerializingStream = new FileOutputSerializingStream(file);
-        fileOutputSerializingStream.write(object, structureModifier);
+        fileOutputSerializingStream.write(object);
         fileOutputSerializingStream.close();
     }
 
     public <T> T deserialize(Class<? extends T> type, File file) throws IOException {
         FileInputSerializingStream fileInputSerializingStream = new FileInputSerializingStream(file);
         fileInputSerializingStream.close();
-        return fileInputSerializingStream.read(type, structureModifier);
+        return fileInputSerializingStream.read(type);
     }
 
     public <T> List<T> deserializeList(Class<T> type, File file) throws IOException {

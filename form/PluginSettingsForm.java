@@ -33,6 +33,11 @@ public class PluginSettingsForm extends HBox {
         choosePane.getChildren().add(pluginComboBox);
         choosePane.getChildren().addAll(new Label("-----------------------------"));
         applyButton = new Button("Apply");
+        applyButton.setOnAction(event -> {
+            if (pluginComboBox.getSelectionModel().getSelectedItem() != null) {
+                pluginComboBox.getSelectionModel().getSelectedItem().applyChanges();
+            }
+        });
         choosePane.getChildren().addAll(applyButton);
         choosePane.setPrefSize(200, 300);
 

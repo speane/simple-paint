@@ -43,7 +43,7 @@ public class PluginManager {
         for (File jar : pluginsDir.listFiles()) {
             try {
                 if (!verifier.verify(jar)) {
-                    //continue;
+                    continue;
                 }
                 JarFile jarFile = new JarFile(jar);
                 Enumeration<JarEntry> jarEntries = jarFile.entries();
